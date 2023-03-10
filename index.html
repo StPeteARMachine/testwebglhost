@@ -2,7 +2,6 @@
 <!-- NFYNT -->
 <!DOCTYPE html>
 <html lang="en-us">
-
 <head>
     <meta charset="utf-8">
     <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
@@ -12,39 +11,31 @@
         html {
             box-sizing: border-box;
         }
-
         *,
         *:before,
         *:after {
             box-sizing: inherit;
         }
-
         html,
         body {
             position: fixed;
             top: 0; left: 0; right: 0; bottom: 0;
         }
-
         canvas {
             display: block;
         }
-
         body {
             margin: 0;
         }
-
         #unity-container {
             width: 100%;
             height: 100%;
         }
-
         #unity-canvas {
             width: 100%;
             height: 100%;
-
             background: #231F20;
         }
-
         #loading-cover {
             position: absolute;
             top: 0;
@@ -55,7 +46,6 @@
             justify-content: center;
             align-items: center;
         }
-
         #unity-loading-bar {
             flex: 1 1 auto;
             display: flex;
@@ -63,7 +53,6 @@
             justify-content: center;
             align-items: center;
         }
-
         #unity-progress-bar-empty {
             width: 80%;
             height: 24px;
@@ -72,28 +61,23 @@
             border: 1px solid white;
             padding: 2px;
         }
-
         #unity-progress-bar-full {
             width: 0%;
             height: 100%;
             background: white;
         }
-
         .light #unity-progress-bar-empty {
             border-color: black;
         }
-
         .light #unity-progress-bar-full {
             background: black;
         }
-
         .spinner,
         .spinner:after {
             border-radius: 50%;
             width: 5em;
             height: 5em;
         }
-
         .spinner {
             margin: 10px;
             font-size: 10px;
@@ -106,19 +90,16 @@
             transform: translateZ(0);
             animation: spinner-spin 1.1s infinite linear;
         }
-
         @keyframes spinner-spin {
             0% {
                 transform: rotate(0deg);
             }
-
             100% {
                 transform: rotate(360deg);
             }
         }
     </style>
 </head>
-
 <body class="dark">
     <div id="unity-container" class="unity-desktop">
         <canvas id="unity-canvas"></canvas>
@@ -134,26 +115,23 @@
     <script type="text/javascript" src="https://libs.zappar.com/zappar-cv/2.0.0/zappar-cv.js"></script>
     <script>
         var db = indexedDB.open("dummy_indexdb", 1); // iOS 14.6 fix; the call to open indexdb hangs forever otherwise
-
         const buildUrl = "Build";
-        const loaderUrl = buildUrl + "/5.loader.js";
+        const loaderUrl = buildUrl + "/1.loader.js";
         const config = {
-            dataUrl: buildUrl + "/5.data.unityweb",
-            frameworkUrl: buildUrl + "/5.framework.js.unityweb",
-            codeUrl: buildUrl + "/5.wasm.unityweb",
+            dataUrl: buildUrl + "/1.data.unityweb",
+            frameworkUrl: buildUrl + "/1.framework.js.unityweb",
+            codeUrl: buildUrl + "/1.wasm.unityweb",
         streamingAssetsUrl: "StreamingAssets",
             companyName: "ARmachine",
             productName: "Alien Pal",
             productVersion: "0.3",
         };
-
         const container = document.querySelector("#unity-container");
         const canvas = document.querySelector("#unity-canvas");
         const loadingCover = document.querySelector("#loading-cover");
         const progressBarEmpty = document.querySelector("#unity-progress-bar-empty");
         const progressBarFull = document.querySelector("#unity-progress-bar-full");
         const spinner = document.querySelector('.spinner');
-
         if (/iPhone|iPad|iPod|Android/i.test(navigator.userAgent)) {
             container.className = "unity-mobile";
             //config.matchWebGLToCanvasSize = false;    
@@ -161,16 +139,12 @@
             config.devicePixelRatio = window.devicePixelRatio;
         }
         loadingCover.style.display = "";
-
         window.zappar = ZCV.initialize();
-
         const script = document.createElement("script");
         script.src = loaderUrl;
         //script.onload = () => { CreateUnityLoader();   };
         document.body.appendChild(script);
-
         window.zappar.permission_request_ui_promise().then(WaitForZCVLoad);
-
         function WaitForZCVLoad() {
             if (zappar.loaded()) {
                 CreateUnityLoader();
@@ -178,7 +152,6 @@
             }
             setTimeout(WaitForZCVLoad, 500);
         }
-
         function CreateUnityLoader() {
             createUnityInstance(canvas, config, (progress) => {
                 spinner.style.display = "none";
@@ -191,8 +164,6 @@
                 alert(message);
             });
         }
-
     </script>
 </body>
-
 </html>
